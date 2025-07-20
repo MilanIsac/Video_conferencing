@@ -1,6 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import React from 'react'
-import { login } from '../lib/api.js';
 import { ShipWheelIcon, LoaderIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useLoginUser from '../hooks/useLoginUser.js';
@@ -10,8 +9,6 @@ const LoginPage = () => {
     email: '',
     password: '',
   });
-
-  const queryClient = useQueryClient();
 
   const { error, isPending, loginMutation } = useLoginUser();
 

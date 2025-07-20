@@ -8,14 +8,11 @@ import CallPage from "./pages/CallPage.jsx"
 import ChatPage from "./pages/ChatPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 
-import { useQuery } from '@tanstack/react-query'
-import { axiosInstance } from './lib/axios.js'
-
 import { Navigate } from "react-router"
 import { Toaster } from 'react-hot-toast'
 import PageLoader from './components/PageLoader.jsx';
-import { getAuthUser } from './lib/api.js';
 import useAuthUser from './hooks/useAuthUser.js';
+import Layout from './components/Layout.jsx';
 
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
@@ -30,11 +27,14 @@ const App = () => {
   return (
     <div className='h-screen' data-theme='coffee'>
       <Routes>
+
         <Route path="/" element={isAuthenticated && isOnboarded ? (
-          <HomePage />
+          <Layout  showSidebar={true}>
+            <HomePage />
+          </Layout>
         ) : (
-        <Navigate to={isAuthenticated ? '/onboarding' : '/login' }/>)
-      }/>
+          <Navigate to={isAuthenticated ? '/onboarding' : '/login'} />)
+        } />
         <Route path="/signup" element={!isAuthenticated ? <SignUpPage /> : <Navigate to={
           isOnboarded ? '/' : '/onboarding'
         } />} />
@@ -44,9 +44,9 @@ const App = () => {
         <Route path="/notifications" element={isAuthenticated ? <NotificationsPage /> : <Navigate to='/login' />} />
         <Route path="/call" element={isAuthenticated ? <CallPage /> : <Navigate to='/login' />} />
         <Route path="/chat" element={isAuthenticated ? <ChatPage /> : <Navigate to='/login' />} />
-        <Route path="/onboarding" element={isAuthenticated ? <OnboardingPage /> : <Navigate to='/login' />} />
-      </Routes>
+        <Route path="/onboarding" element={isAuthenticated ? (!isOnboarded ? (<OnboardingPage />) : (<Navigate to="/" />)) : (<Navigate to="/login" />)}/>
 
+        </Routes>
       <Toaster />
     </div>
   )
