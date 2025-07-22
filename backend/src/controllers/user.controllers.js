@@ -5,11 +5,11 @@ export async function getRecommendations(req, res) {
 
     try {
         const userId = req.user.id;
-        const friends = req.user.friends || [];
+        // const friends = req.user.friends || [];
         const currUser = req.user;
 
-        console.log("Current User ID:", userId);
-        console.log("Friends:", friends);
+        // console.log("Current User ID:", userId);
+        // console.log("Friends:", friends);
 
         const recommendedUsers = await User.find({
             $and: [
