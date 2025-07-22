@@ -5,17 +5,21 @@ export async function getRecommendations(req, res) {
 
     try {
         const userId = req.user.id;
-        const currUser = await User.find({
+        const friends = req.user.friends || [];
+        const currUser = req.user;
+
+        console.log("Current User ID:", userId);
+        console.log("Friends:", friends);
+
+        const recommendedUsers = await User.find({
             $and: [
                 { _id: { $ne: userId } }, // excluding myself
-                { $id: { $nin: req.user.friends } }, // excluding my friends
+                { _id: { $nin: currUser.friends } }, // excluding my friends
                 { isOnboarded: true } // only onboarded users
             ]
-        })
-
-        re.status(200).json(currUser);
+        });
+        res.status(200).json(recommendedUsers);
     }
-
     catch (error) {
         console.error('Error fetching recommendations:', error);
         res.status(500).json({ message: 'Internal server error' });

@@ -37,12 +37,12 @@ export async function getUserFriends () {
 }
 
 export async function getRecommendedUsers() {
-      const response = await axiosInstance.post('/users', userData);
+      const response = await axiosInstance.get('/users');
       return response.data;
 }
 
 export async function getOutgoingFriendRequests() {
-      const response = await axiosInstance.post('/users/get-outgoing-friend-requests', userData);
+      const response = await axiosInstance.get('/users/get-outgoing-friend-requests', userData);
       return response.data;
 }
 
