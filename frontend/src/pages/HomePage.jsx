@@ -40,7 +40,7 @@ const HomePage = () => {
       })
       setOutGoingRequest(outgoingIds)
     }
-  })
+  }, [outgoingFriendRequests]) 
 
   // useEffect(() => {
   //   const outgoingIds = new Set();

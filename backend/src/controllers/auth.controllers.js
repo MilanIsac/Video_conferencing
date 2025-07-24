@@ -22,10 +22,16 @@ export async function signup(req, res) {
             return res.status(400).json({ message: 'Invalid email format' });
         }
 
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
             return res.status(400).json({ message: 'Email already exists' });
         }
+
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+
 
         const idx = Math.floor(Math.random() * 100) + 1;
         const profile_pic = `https://avatar.iran.liara.run/public/${idx}.png`;

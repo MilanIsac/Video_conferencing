@@ -33,7 +33,7 @@ const Navbar = () => {
           </div>
         )}
 
-        <div className='flex items-center gap-3 sm:gap-4'>
+        <div className='flex items-center gap-3 sm:gap-4 ml-auto'>
           <Link to={'/notifications'}>
             <button className='btn btn-ghost btn-circle'>
               <BellIcon className='size-6 text-based-content opacity-70 ' />

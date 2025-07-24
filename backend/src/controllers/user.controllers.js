@@ -82,6 +82,8 @@ export async function sendFriendRequest(req, res) {
             recipient: recipientId,
         });
 
+        await friendRequest.save();
+
         res.status(201).json(friendRequest);
 
 
@@ -133,12 +135,12 @@ export async function getFriendRequest(req, res) {
         const incomingRequest = await FriendRequest.find({
             recipient: req.user.id,
             status: "pending",
-        }).populate("sender", "name profile_pic");
+        }).populate("sender", "username profile_pic");
 
         const acceptedFriendReq = await FriendRequest.find({
             sender: req.user.id,
             status: "accepted",
-        }).populate("sender", "name profile_pic");
+        }).populate("sender", "username profile_pic");
 
         res.status(200).json({ incomingRequest, acceptedFriendReq });
 
@@ -151,11 +153,10 @@ export async function getFriendRequest(req, res) {
 export async function getOutgoingRequest(req, res) {
 
     try {
-
         const outgoingRequest = await FriendRequest.find({
             sender: req.user.id,
             status: "pending",
-        }.populate("recipient", "name profile_pic"));
+        }).populate("recipient", "username profile_pic");
 
         res.status(200).json(outgoingRequest);
 

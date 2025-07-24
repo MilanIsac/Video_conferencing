@@ -32,7 +32,7 @@ export const completeOnboarding = async (userData) => {
 }
 
 export async function getUserFriends () {
-      const response = await axiosInstance.post('/users/friends', userData);
+      const response = await axiosInstance.get('/users/friends');
       return response.data;
 }
 
@@ -42,11 +42,26 @@ export async function getRecommendedUsers() {
 }
 
 export async function getOutgoingFriendRequests() {
-      const response = await axiosInstance.get('/users/get-outgoing-friend-requests', userData);
+      const response = await axiosInstance.get('/users/outgoing-friend-request');
       return response.data;
 }
 
 export async function sendFriendRequest(userId) {
-      const response = await axiosInstance.post(`/users/friends-request/${userId}`);
+      const response = await axiosInstance.post(`/users/friends-requests/${userId}`);
+      return response.data;
+}
+
+export async function getFriendRequests() {
+      const response = await axiosInstance.get('/users/friend-request/');
+      return response.data;
+}
+
+export async function acceptFriendRequest(userId) {
+      const response = await axiosInstance.put(`/users/friends-requests/${userId}/accept`);
+      return response.data;
+}
+
+export async function getStreamToken() {
+      const response = await axiosInstance.get('/chat/token');
       return response.data;
 }
