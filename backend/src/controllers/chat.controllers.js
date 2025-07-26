@@ -9,6 +9,7 @@ export async function getStreamToken(req, res) {
     catch (error) {
         console.error("Error in getStreamToken: ", error);
         res.status(500).json({ message: "Internal Server Error" });
+        // return null;
     }
 
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import useAuthUser from '../hooks/useAuthUser';
 import { useQuery } from '@tanstack/react-query';
@@ -16,6 +16,8 @@ import {
 } from 'stream-chat-react';
 import { StreamChat } from 'stream-chat';
 import ChatLoader from '../components/ChatLoader';
+import CallButton from '../components/CallButton';
+import { toast } from 'react-hot-toast';
 
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
 
@@ -28,7 +30,7 @@ const ChatPage = () => {
 
   const { authUser } = useAuthUser();
 
-  const { data } = useQuery({
+  const { data: tokenData } = useQuery({
     queryKey: ['streamToken'],
     queryFn: getStreamToken,
     enabled: !!authUser // this will run only whne auth user is available
@@ -36,9 +38,13 @@ const ChatPage = () => {
 
   useEffect(() => {
     const initChat = async() => {
-      if(!tokenData.token || !authUser){
+      if(!authUser || !tokenData?.token ){
         return;
       }
+
+      console.log("Stream tokenData:", tokenData);
+
+      const token = tokenData.token;
 
       try {
         console.log("Initializing stream chat cient...")
@@ -48,9 +54,9 @@ const ChatPage = () => {
           id: authUser._id,
           name: authUser.username,
           image: authUser.profile_pic,
-        }, tokenData.token)
+        }, token)
 
-        const channelId = [authUser._id, targetUserId].sort().join('-');
+        const channelId = [authUser._id, targetUserId].sort().join("-");
 
         const currChannel = client.channel('messaging', channelId, {
           members: [authUser._id, targetUserId],
