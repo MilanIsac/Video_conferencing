@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getOutgoingFriendRequests, getRecommendedUsers, getUserFriends, sendFriendRequest } from '../lib/api';
 import { CheckCircleIcon, MapPinIcon, UserPlusIcon, UsersIcon } from 'lucide-react';
 import { Link } from 'react-router-dom'
@@ -124,7 +124,7 @@ const HomePage = () => {
                         </div>
                       </div>
 
-                      <button className={`btn w-full mt-2 ${ requestSent ? 'btn-disabled' : 'btn-primary'}`}
+                      <button className={`btn w-52 mt-2 ${ requestSent ? 'btn-disabled' : 'btn-primary'}`}
                       onClick={() => sendRequestMutation(user._id)}
                       disabled={requestSent || isPending}>
                         {requestSent ? (
