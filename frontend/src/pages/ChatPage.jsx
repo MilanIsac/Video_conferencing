@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import useAuthUser from '../hooks/useAuthUser';
 import { useQuery } from '@tanstack/react-query';
@@ -37,8 +37,8 @@ const ChatPage = () => {
   });
 
   useEffect(() => {
-    const initChat = async() => {
-      if(!authUser || !tokenData?.token ){
+    const initChat = async () => {
+      if (!authUser || !tokenData?.token) {
         return;
       }
 
@@ -49,7 +49,7 @@ const ChatPage = () => {
       try {
         console.log("Initializing stream chat cient...")
         const client = StreamChat.getInstance(STREAM_API_KEY);
-        
+
         await client.connectUser({
           id: authUser._id,
           name: authUser.username,
@@ -67,11 +67,11 @@ const ChatPage = () => {
         setChannel(currChannel);
 
       }
-      catch(error) {
+      catch (error) {
         console.error("Error initializing chat", error);
         toast.error("Could not connect to chat. Please try again");
       }
-      finally{
+      finally {
         setLoading(false);
       }
     };
@@ -81,7 +81,7 @@ const ChatPage = () => {
   }, [tokenData, authUser, targetUserId]);
 
   const handleVideoCall = () => {
-    if(channel) {
+    if (channel) {
       const callUrl = `${window.location.origin}/call/${channel.id}`;
 
       channel.sendMessage({
@@ -92,26 +92,44 @@ const ChatPage = () => {
     }
   }
 
-  if(loading || !chatClient || !channel){
+  if (loading || !chatClient || !channel) {
     return <ChatLoader />
   }
 
+  // return (
+  //   <div className='h-[calc(100vh-4rem)]'>
+  //     <Chat client={chatClient}>
+  //       <Channel channel={channel}>
+  //         <div className='w-full realtive'>
+  //           <CallButton handleVideoCall={handleVideoCall} />
+  //           <Window>
+  //             <ChannelHeader />
+  //             <MessageList />
+  //             <MessageInput focus/>
+  //           </Window>
+  //         </div>
+  //       </Channel>
+  //     </Chat>
+  //   </div>
+  // )
+
   return (
-    <div className='h-[93vh]'>
+    <div className='h-[calc(100vh-4rem)]'> {/* avoid overlapping the sticky navbar */}
       <Chat client={chatClient}>
         <Channel channel={channel}>
-          <div className='w-full realtive'>
+          <div className='w-full relative'>
             <CallButton handleVideoCall={handleVideoCall} />
             <Window>
               <ChannelHeader />
               <MessageList />
-              <MessageInput focus/>
+              <MessageInput focus />
             </Window>
           </div>
         </Channel>
       </Chat>
     </div>
   )
+
 }
 
 export default ChatPage

@@ -22,6 +22,10 @@ const App = () => {
   const isOnboarded = authUser?.isOnboarded;
   const { theme } = useTheme();
 
+  console.log("authUser", authUser);
+  console.log("isAuthenticated", isAuthenticated);
+  console.log("isOnboarded", isOnboarded);
+
   if (isLoading) {
     return <PageLoader />
   }
@@ -31,7 +35,7 @@ const App = () => {
       <Routes>
 
         <Route path="/" element={isAuthenticated && isOnboarded ? (
-          <Layout  showSidebar={true}>
+          <Layout showSidebar={true}>
             <HomePage />
           </Layout>
         ) : (
@@ -52,6 +56,18 @@ const App = () => {
             <Navigate to={isAuthenticated ? '/onboarding' : '/login'} />
           )}
         />
+
+        {/* <Route path="/notifications"
+          element={
+            <Layout showSidebar={true}>
+              <NotificationsPage />
+            </Layout>
+          }
+        /> */}
+
+
+
+
         <Route path="/call/:id" element={
           isAuthenticated && isOnboarded ? (
             <CallPage />
@@ -69,9 +85,9 @@ const App = () => {
             <Navigate to={isAuthenticated ? '/onboarding' : '/login'} />
           )
         } />
-        <Route path="/onboarding" element={isAuthenticated ? (!isOnboarded ? (<OnboardingPage />) : (<Navigate to="/" />)) : (<Navigate to="/login" />)}/>
+        <Route path="/onboarding" element={isAuthenticated ? (!isOnboarded ? (<OnboardingPage />) : (<Navigate to="/" />)) : (<Navigate to="/login" />)} />
 
-        </Routes>
+      </Routes>
       <Toaster />
     </div>
   )

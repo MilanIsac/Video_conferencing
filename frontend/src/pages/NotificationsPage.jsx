@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import React from 'react'
 import { getFriendRequests } from '../lib/api';
 import { acceptFriendRequest } from '../lib/api';
-import { UserCheckIcon } from 'lucide-react';
+import { BellIcon, ClockIcon, MessageSquareIcon, UserCheckIcon } from 'lucide-react';
 import NoNotificationsFound from '../components/NoNotificationsFound';
 
 const NotificationsPage = () => {
@@ -94,14 +93,14 @@ const NotificationsPage = () => {
                         <div className="flex items-start gap-3">
                           <div className="avatar mt-1 size-10 rounded-full">
                             <img
-                              src={notification.recipient.profile_pic}
-                              alt={notification.recipient.username}
+                              src={notification.sender.profile_pic}
+                              alt={notification.sender.username}
                             />
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-semibold">{notification.recipient.username}</h3>
+                            <h3 className="font-semibold">{notification.sender.username}</h3>
                             <p className="text-sm my-1">
-                              {notification.recipient.username} accepted your friend request
+                              {notification.sender.bio}
                             </p>
                             <p className="text-xs flex items-center opacity-70">
                               <ClockIcon className="h-3 w-3 mr-1" />
