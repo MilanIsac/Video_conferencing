@@ -1,4 +1,3 @@
-import React from 'react'
 import useAuthUser from '../hooks/useAuthUser'
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -29,11 +28,11 @@ const Sidebar = () => {
                     <span className='text-lg font-medium'>Home</span>
                 </Link>
 
-                <Link to='/friends' className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case 
+                {/* <Link to='/friends' className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case 
                     ${currentPath === '/friends' ? 'btn-active' : ''}`}>
                     <UserIcon className='size-5 text-base-content opacity-70' />
                     <span className='text-lg font-medium'>Friends</span>
-                </Link>
+                </Link> */}
 
                 <Link to='/notifications' className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case 
                     ${currentPath === '/notifications' ? 'btn-active' : ''}`}>
@@ -50,7 +49,7 @@ const Sidebar = () => {
                         </div>
                     </div>
                     <div className='flex-1'>
-                        <p className='font-semibold text-sm'>{authUser?.username}</p>
+                        <Link to={`/profile/${authUser._id}`} className='font-semibold text-sm'>{authUser?.username}</Link>
                         <p className='text-xs txt-success flex items-center gap-1'>
                             <span className='size-2 rounded-full bg-success inline-block' />Online
                         </p>

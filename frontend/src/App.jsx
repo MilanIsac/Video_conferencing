@@ -14,6 +14,8 @@ import PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
 import Layout from './components/Layout.jsx';
 import { useTheme } from './store/useTheme.js';
+import { Profiler } from 'react';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
@@ -67,6 +69,14 @@ const App = () => {
 
 
 
+
+        <Route path="/profile/:id" element={
+          isAuthenticated && isOnboarded ? (
+            <ProfilePage />
+          ) : (
+            <Navigate to={isAuthenticated ? '/onboarding' : '/login'} />
+          )
+        } />
 
         <Route path="/call/:id" element={
           isAuthenticated && isOnboarded ? (

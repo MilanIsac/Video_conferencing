@@ -31,7 +31,7 @@ export const completeOnboarding = async (userData) => {
       return response.data;
 }
 
-export async function getUserFriends () {
+export async function getUserFriends() {
       const response = await axiosInstance.get('/users/friends');
       return response.data;
 }
@@ -64,4 +64,13 @@ export async function acceptFriendRequest(userId) {
 export async function getStreamToken() {
       const response = await axiosInstance.get('/chat/token');
       return response.data;
+}
+export async function getUserProfile(userId) {
+      const response = await fetch(`/api/users/${userId}`, {
+            credentials: 'include',
+      });
+      if (!response.ok) {
+            throw new error("Failed to fetch user profile");
+      }
+      return response.json();
 }
