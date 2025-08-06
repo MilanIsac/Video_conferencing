@@ -8,14 +8,14 @@ import { getUserProfile } from '../lib/api';
 
 const ProfilePage = () => {
 
-    const { userId } = useParams();
+    const { id } = useParams();
     const { authUser } = useAuthUser();
 
-    const isOwnUserProfile = !userId || userId === authUser._id;
+    const isOwnUserProfile = !id || id === authUser._id;
 
     const { data: profile, isLoading, error } = useQuery({
-        queryKey: ['userProfile', userId || authUser._id],
-        queryFn: getUserProfile(userId || authUser._id),
+        queryKey: ['userProfile', id || authUser._id],
+        queryFn: () => getUserProfile(id || authUser._id),
     });
 
     if (isLoading) {
@@ -24,6 +24,11 @@ const ProfilePage = () => {
     if (error) {
         return <div className='text-center text-error'>Error Loading Profile</div>
     }
+
+    if (!profile) {
+        return <div className="text-center">No profile data found.</div>
+    }
+
 
     return (
         <div className='max-w-3xl mx-auto p-6 space-y-6'>
@@ -55,8 +60,8 @@ const ProfilePage = () => {
             {!isOwnUserProfile && (
                 <div className='flex gap-4'>
                     <Link to={`/chat/${profile._id}`} className='btn btn-primary'>
-                    <MessageSquareIcon className='size-4 mr-2' />
-                    Message
+                        <MessageSquareIcon className='size-4 mr-2' />
+                        Message
                     </Link>
 
                     <button className='btn btn-outline'>

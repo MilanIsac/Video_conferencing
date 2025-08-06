@@ -66,10 +66,7 @@ const App = () => {
             </Layout>
           }
         /> */}
-
-
-
-
+        
         <Route path="/profile/:id" element={
           isAuthenticated && isOnboarded ? (
             <ProfilePage />

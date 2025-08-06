@@ -65,12 +65,20 @@ export async function getStreamToken() {
       const response = await axiosInstance.get('/chat/token');
       return response.data;
 }
-export async function getUserProfile(userId) {
-      const response = await fetch(`/api/users/${userId}`, {
+
+export async function getUserProfile(id) {
+      const response = await fetch(`/api/users/${id}`, {
             credentials: 'include',
       });
       if (!response.ok) {
-            throw new error("Failed to fetch user profile");
+            let errorMsg = "Failed to fetch user profile";
+            try {
+                  const errorData = await response.json();
+                  if (errorData?.error || errorData?.message) {
+                        errorMsg = errorData.error || errorData.message;
+                  }
+            } catch { }
+            throw new Error(errorMsg);
       }
       return response.json();
 }
