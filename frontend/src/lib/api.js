@@ -22,7 +22,6 @@ export const getAuthUser = async () => {
       } catch (error) {
             console.error("Error fetching auth user:", error);
             return null;
-
       }
 }
 
@@ -67,18 +66,10 @@ export async function getStreamToken() {
 }
 
 export async function getUserProfile(id) {
-      const response = await fetch(`/api/users/${id}`, {
-            credentials: 'include',
-      });
-      if (!response.ok) {
-            let errorMsg = "Failed to fetch user profile";
-            try {
-                  const errorData = await response.json();
-                  if (errorData?.error || errorData?.message) {
-                        errorMsg = errorData.error || errorData.message;
-                  }
-            } catch { }
-            throw new Error(errorMsg);
+      try {
+            const response = await axiosInstance.get(`/users/${id}`);
+            return response.data;
+      } catch (error) {
+            return null;
       }
-      return response.json();
 }

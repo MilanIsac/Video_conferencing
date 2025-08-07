@@ -1,9 +1,7 @@
 import React from 'react'
 import useAuthUser from '../hooks/useAuthUser'
 import { useLocation } from 'react-router';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BellIcon, LogOutIcon, ShipWheelIcon } from 'lucide-react';
-import { logout } from '../lib/api';
 import { Link } from 'react-router-dom';
 import ThemeSelector from './ThemeSelector.jsx';
 import useLogout from '../hooks/useLogout.js';
@@ -44,12 +42,12 @@ const Navbar = () => {
         {/* selecting themes */}
         <ThemeSelector />
 
-        {/* profile_pic */}
+        {/* profile_pic
         <div className='avatar'>
           <div className='w-9 rounded-full'>
             <img src={authUser.profile_pic} alt="Profile Pic" rel='noreferrer' />
           </div>
-        </div>
+        </div> */}
         
         {/* logout btn */}
         <button className='btn btn-ghost btn-circle' onClick={logoutMutation}>
